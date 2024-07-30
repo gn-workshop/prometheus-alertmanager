@@ -393,10 +393,8 @@ func (l *Log) Log(r *pb.Receiver, gkey string, firingAlerts, resolvedAlerts []ui
 		}
 	}
 
-	expiresAt := now.Add(l.retention)
-	if expiry > 0 && l.retention > expiry {
-		expiresAt = now.Add(expiry)
-	}
+    // https://github.com/prometheus/alertmanager/issues/3473#issuecomment-1691439415
+	expiresAt := now.Add(expiry).Add(l.retention)
 
 	e := &pb.MeshEntry{
 		Entry: &pb.Entry{
