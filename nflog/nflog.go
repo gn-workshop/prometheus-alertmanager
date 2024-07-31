@@ -393,8 +393,8 @@ func (l *Log) Log(r *pb.Receiver, gkey string, firingAlerts, resolvedAlerts []ui
 		}
 	}
 
-    // https://github.com/prometheus/alertmanager/issues/3473#issuecomment-1691439415
-	expiresAt := now.Add(expiry).Add(l.retention)
+	// https://github.com/prometheus/alertmanager/issues/3473#issuecomment-1691439415
+	expiresAt := now.Add(expiry) // should not set repeat too long to avoid overflows
 
 	e := &pb.MeshEntry{
 		Entry: &pb.Entry{
